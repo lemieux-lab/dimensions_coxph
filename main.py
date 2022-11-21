@@ -9,22 +9,20 @@ args = parsers.parse_arguments()
 #FE_args = parsers.parse_FE_arguments()
 class ExperimentLoader:
     def __init__(self) -> None:
-        from experiments.exp_1 import v_6 as exp_1_6
-        from experiments.exp_2 import v_1 as exp_2_1
-        from experiments.exp_2 import v_3 as exp_2_3
-        from experiments.plots_1 import v_0 as plot_1_0
-        from experiments.exp_3 import v_0 as exp_3_0
-        from experiments.exp_4 import v_2 as exp_4_2
-        from experiments.exp_4 import v_1 as exp_4_1
+        # from experiments.exp_1 import v_6 as exp_1_6
+        # from experiments.exp_2 import v_1 as exp_2_1
+        # from experiments.exp_2 import v_3 as exp_2_3
+        # from experiments.plots_1 import v_0 as plot_1_0
+        # from experiments.exp_3 import v_0 as exp_3_0
+        # from experiments.exp_4 import v_2 as exp_4_2
+        # from experiments.exp_4 import v_1 as exp_4_1
+        from experiments import experiment1
+        from experiments import experiment2
         from experiments import poster 
+
         self.experiment_dict = {
-            "1": exp_1_6,
-            "2": exp_2_1,
-            "2.3": exp_2_3,
-            "p1": plot_1_0,
-            "3": exp_3_0,
-            "4.2": exp_4_2,
-            "4.1": exp_4_1,
+            "1": experiment1,
+            "2": experiment2,
             "poster": poster,
         }
     def load_experiment(self, exp_vn):

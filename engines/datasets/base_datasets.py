@@ -263,12 +263,12 @@ class SurvivalGEDataset():
 
     
     def _get_LSC17(self):
-        if 0: # f"LSC17_{self.COHORT}_expressions.csv" in os.listdir("Data/SIGNATURES"):
-            LSC17_expressions = pd.read_csv(f"Data/SIGNATURES/LSC17_{self.COHORT}_expressions.csv", index_col = 0)
+        if 0: # f"LSC17_{self.COHORT}_expressions.csv" in os.listdir("data/SIGNATURES"):
+            LSC17_expressions = pd.read_csv(f"data/LSC17_{self.COHORT}_expressions.csv", index_col = 0)
         else: 
-            lsc17 = pd.read_csv("Data/SIGNATURES/LSC17.csv")
+            lsc17 = pd.read_csv("data/LSC17.csv")
             LSC17_expressions = self.GE_TRSC_LOG[lsc17.merge(self.gene_repertoire, left_on = "ensmbl_id_version", right_on = "featureID_x").featureID_y]
-            LSC17_expressions.to_csv(f"Data/SIGNATURES/LSC17_{self.COHORT}_expressions.csv")
+            LSC17_expressions.to_csv(f"data/LSC17_{self.COHORT}_expressions.csv")
         return LSC17_expressions
     
     def _get_embedding(self): # bugged for now...
@@ -285,7 +285,7 @@ class TCGA_Dataset():
         # hardocre the name of the cohort
         self.COHORT = "tcga_target_aml"
         # setup paths
-        self.data_path = "Data"
+        self.data_path = "data"
         self.tcga_data_path = os.path.join(self.data_path, "TCGATARGETAML")
         self.tcga_manifests_path = os.path.join(self.tcga_data_path, "MANIFESTS")
         self.tcga_counts_path = os.path.join(self.tcga_data_path, "COUNTS")
@@ -360,8 +360,8 @@ class TCGA_Dataset():
     def _compute_tpm(self):
         # computes tpm from raw matrix, if already computed, just load
         outfile = f"{self.COHORT}_GE_TRSC_TPM.csv"
-        if outfile in os.listdir("Data") :
-            self._GE_TPM = pd.read_csv(f"Data/{outfile}", index_col = 0)
+        if outfile in os.listdir("data") :
+            self._GE_TPM = pd.read_csv(f"data/{outfile}", index_col = 0)
         else:
             self._compute_ge_raw()
             print(f"TPM normalized Gene Expression (CDS only) file not found in Data/{outfile}\nNow performing tpm norm ...")
@@ -379,7 +379,7 @@ class TCGA_Dataset():
             self._GE_TPM = self._GE_TPM.T 
             # write to file 
             print(f"Writing to Data/{outfile}...")
-            self._GE_TPM.to_csv(f"Data/{outfile}")
+            self._GE_TPM.to_csv(f"data/{outfile}")
 
     def _compute_ge_raw(self):
         # computes the count matrix if it doesn't already exist, else load
@@ -501,13 +501,13 @@ class Leucegene_Dataset():
         self.COHORT = "lgn_pronostic"
         self.learning = learning # for machine learning data processing
         print(f"Loading ClinF {self.COHORT} file ...")
-        self.CF_file = f"Data/{self.COHORT}_CF"
+        self.CF_file = f"data/{self.COHORT}_CF"
         self._CLIN_INFO = pd.read_csv(self.CF_file, index_col = 0)  # load in and preprocess Clinical Features file
         self.NS = self._CLIN_INFO.shape[0]
 
     def _init_CF_files(self):
             
-        infos = pd.read_csv("Data/lgn_ALL_CF", sep = "\t").T
+        infos = pd.read_csv("data/lgn_ALL_CF", sep = "\t").T
         infos.columns = infos.iloc[0,:] # rename cols
         infos = infos.iloc[1:,:] # remove 1st row
         features = ["Prognostic subset", "Age_at_diagnosis", 
@@ -521,11 +521,11 @@ class Leucegene_Dataset():
         "Cytogenetic group"] # select features
         infos = infos[features]
         for cohort in ["lgn_public", "lgn_pronostic"]:
-            samples = pd.read_csv(f"Data/{cohort}_samples", index_col = 0)
+            samples = pd.read_csv(f"data/{cohort}_samples", index_col = 0)
             CF_file = infos.merge(samples, left_index = True, right_on = "sampleID")
             CF_file.index = CF_file.sampleID
             CF_file = CF_file[np.setdiff1d(CF_file.columns, ["sampleID"])]
-            CF_file.to_csv(f"Data/{cohort}_CF")
+            CF_file.to_csv(f"data/{cohort}_CF")
 
     def load(self,  cytogenetic_groups = ["adverse cytogenetics", "intermediate cytogenetics", "favorable cytogenetics"]):
         self._compute_tpm()
@@ -540,8 +540,8 @@ class Leucegene_Dataset():
         
     def _compute_tpm(self):
         outfile = f"{self.COHORT}_GE_TRSC_TPM.csv"
-        if outfile in os.listdir("Data") :
-            self._GE_TPM = pd.read_csv(f"Data/{outfile}", index_col = 0)
+        if outfile in os.listdir("data") :
+            self._GE_TPM = pd.read_csv(f"data/{outfile}", index_col = 0)
         else:
             self._compute_ge_raw()
             print(f"TPM normalized Gene Expression (CDS only) file not found in Data/{outfile}\nNow performing tpm norm ...")
@@ -562,14 +562,14 @@ class Leucegene_Dataset():
             self._GE_TPM.index = self._GE.featureID_y
             # write to file 
             print(f"Writing to Data/{outfile}...")
-            self._GE_TPM.to_csv(f"Data/{outfile}")
+            self._GE_TPM.to_csv(f"data/{outfile}")
     
     def _compute_ge_raw(self):
         
         outfile = f"{self.COHORT}_GE.assembled.csv"
-        if outfile in os.listdir("Data") :
+        if outfile in os.listdir("data") :
             print(f"Loading Raw Gene Expression file from {outfile}...")
-            self._RAW_COUNTS = pd.read_csv(f"Data/{outfile}", index_col = 0)
+            self._RAW_COUNTS = pd.read_csv(f"data/{outfile}", index_col = 0)
         else : 
             print(f"Gene Expression file not found... in Data/{outfile} \nLoading {self.NS} samples GE readcounts from files ...")
             samples = []
@@ -578,7 +578,7 @@ class Leucegene_Dataset():
             print("Concatenating ...")
             df = pd.concat(samples)
             print(f"writing to Data/{outfile} ...")
-            df.to_csv(f"Data/{outfile}")
+            df.to_csv(f"data/{outfile}")
             self._RAW_COUNTS = df 
    
     
