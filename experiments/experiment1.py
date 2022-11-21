@@ -88,7 +88,6 @@ def run(args):
     LGN_INT_LSC17_params = HyperParams.generate_default("ridge_cph_lifelines_LSC17", LGN_INT_LSC17)        
     LGN_INT_PCA17_params = HyperParams.generate_default("ridge_cph_lifelines_PCA", LGN_INT_PCA17)        
     LGN_INT_PCA_PARAMS = {"min_col": 0, "max_col": LGN_INT_PCA17.x.shape[1], "pca_n": 17}   
-    pdb.set_trace()
     TCGA_LSC17_params = HyperParams.generate_default("ridge_cph_lifelines_LSC17", TCGA_LSC17)        
     TCGA_PCA17_params = HyperParams.generate_default("ridge_cph_lifelines_PCA", TCGA_PCA17)   
     TCGA_PCA_params = {"min_col": 0, "max_col": TCGA_PCA17.x.shape[1], "pca_n": 17}   
@@ -125,6 +124,6 @@ def run(args):
     # plot_c_surv(cox_models.evaluate(LGN_INT_PCA17, LGN_INT_PCA17_params, pca_params = LGN_INT_PCA_PARAMS), args.OUTPATH, group_weights = Counter(cyt_levels))
     
 
-    pdb.set_trace()
+
     
     
