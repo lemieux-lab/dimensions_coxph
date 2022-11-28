@@ -51,13 +51,13 @@ The other commands will be explained.
 ## FIG1
 ```
 # generate scores data, leave-one-out bootstraps c_index
-python3 main.py --run_experiment 2 -C lgn_pronostic -P CF LSC17 PCA17 CF-PCA17 CF-LSC17 -M CPH -N_REP 10000 -CYT -O RES/FIGS/FIG4
+python3 main.py --run_experiment 1 -C lgn_pronostic -P CF LSC17 PCA17 CF-PCA17 CF-LSC17 -M CPH -N_REP 10000 -CYT -O FIG1
 ```
 
 ## FIG2 
 ```
-# generate log_reg GE to CF results (leave-one-out)
-python3 main.py --run_experiment 2 -C lgn_pronostic -P PCA17 LSC17 PCA300 -M LOG_REG -O RES/FIGS/FIG2
+# generate Pearson-moment correlation logistic regression from GE to CF heatmaps results 
+python3 main.py --run_experiment 2 -C lgn_pronostic -O FIG2
 ```
 
 ## FIG3

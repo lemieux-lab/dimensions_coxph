@@ -27,3 +27,4 @@ def parse_arguments():
     parser.add_argument("-N_FOLDS", dest = "NFOLDS", default = 5, type = int, help = "number of crossvalidation folds") 
     parser.add_argument("-E", dest = "NEPOCHS", default = 200, type = int, help = "number of epochs for optim of DNN models")
     
+    return parser.parse_args()
