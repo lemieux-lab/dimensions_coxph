@@ -18,11 +18,13 @@ class ExperimentLoader:
         # from experiments.exp_4 import v_1 as exp_4_1
         from experiments import experiment1
         from experiments import experiment2
+        from experiments import experiment3
         from experiments import poster 
 
         self.experiment_dict = {
             "1": experiment1,
             "2": experiment2,
+            "3": experiment3,
             "poster": poster,
         }
     def load_experiment(self, exp_vn):

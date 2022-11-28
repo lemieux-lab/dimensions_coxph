@@ -28,7 +28,7 @@ class Benchmark(Engine):
         super().__init__(params)
         self.cohort = data["cohort"]
         self.data = data
-        self.OUTDIR = utils.assert_mkdir(os.path.join("RES", f"EXP_{self._params.EXP}", self.cohort))
+        self.OUTDIR = utils.assert_mkdir(self._params.OUTPATH)
         
     def _perform_projection(self, proj_type, data, input_size = 17):    
         # set data
@@ -67,13 +67,18 @@ class Benchmark(Engine):
             o.writelines(line)
     
     def run(self, in_D):
-        self.OUTFILE = os.path.join(self.OUTDIR, f"d_{in_D}_n_{self._params.NREP_TECHN}_{datetime.now()}.csv")
+        self.OUTFILE = os.path.join(self.OUTDIR, f"{self._params.COHORT}_d_{in_D}_n_{self._params.NREP_TECHN}_{datetime.now()}.csv")
         # init results
         tst_res = []
         tr_res = [] 
         agg_c_index = []
         header = ",".join(["cohort", "rep_n", "proj_type", "input_d", "c_ind_tr", "c_ind_tst"]) + "\n"
         self._dump(header)
+
+
+
+
+
         for rep_n in tqdm(range(self._params.NREP_TECHN), desc = f"input D - {in_D}"):
             idx = np.arange(self.data["CDS"].x.shape[0])
             np.random.shuffle(idx) # shuffle dataset! 

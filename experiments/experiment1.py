@@ -107,7 +107,7 @@ def run(args):
 
     # # GE WITH CF 
     plot_c_surv_3_groups(cox_models.evaluate(LGN_CF_LSC17, LGN_CF_LSC17_params), args.OUTPATH, group_weights = Counter(lgn_cyt_levels))
-    plot_c_surv_3_groups(cox_models.evaluate(LGN_CF_PCA17, LGN_CF_PCA17_params, pca_params = {"min_col": 34, "max_col": LGN_CF_PCA17.x.shape[1], "pca_n": 17} ), args.OUTPATH, group_weights = Counter(lgn_cyt_levels))
+    plot_c_surv_3_groups(cox_models.evaluate(LGN_CF_PCA17, LGN_CF_PCA17_params, pca_params = {"min_col": 18, "max_col": LGN_CF_PCA17.x.shape[1], "pca_n": 17} ), args.OUTPATH, group_weights = Counter(lgn_cyt_levels))
 
     # # GE NO CF  
     plot_c_surv_3_groups(cox_models.evaluate(TCGA_LSC17, TCGA_LSC17_params), args.OUTPATH, group_weights = Counter(tcga_cyt_levels))
